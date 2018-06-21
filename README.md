@@ -1,16 +1,35 @@
 # Reacthub
 React JS + Github API's = ReactHub
 
-```
-React JS + Redux + React Router + Semantic UI
-```
+<img src="https://github.com/yokesharun/reacthub/blob/master/public/images/Reacthub.png" alt="ReactHub" align="center" />
+
+<br />
+
+<div align="center">ReactHub is Platform to search github items and which is created with Github API's</div>
+
+<br />
+
+<div align="center">
+  <!-- Dependency Status -->
+  <a href="https://david-dm.org/yokesharun/reacthub">
+    <img src="https://david-dm.org/yokesharun/reacthub.svg" alt="Dependency Status" />
+  </a>
+  <!-- devDependency Status -->
+  <a href="https://david-dm.org/yokesharun/reacthub#info=devDependencies">
+    <img src="https://david-dm.org/yokesharun/reacthub/dev-status.svg" alt="devDependency Status" />
+  </a>
+  <!-- Build Status -->
+  <a href="https://travis-ci.org/yokesharun/reacthub">
+    <img src="https://travis-ci.org/yokesharun/reacthub.svg" alt="Build Status" />
+  </a>
+</div>
 
 ## ReactHub Todo list
 
  1. ~~Application Setup~~
- 2. Install Packages
- 3. Redux Architecture - Actions, Components, Reducers, Stores
- 4. Setup React Router
+ 2. ~~Install Packages~~
+ 3. ~~Redux Architecture - Actions, Components, Reducers, Stores~~
+ 4. ~~Setup React Router~~
  5. Getting Github Username
  6. Get all the Gists of the user
  7. Get a single Gist based on Gist ID

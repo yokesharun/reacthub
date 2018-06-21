@@ -1,5 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import { Provider } from 'react-redux';
+import AppRouter from './AppRouter';
+import store from './store';
 
-ReactDOM.render(<App />, document.getElementById('reacthub'));
+ReactDOM.render(
+	<Provider store={store}>
+		<AppRouter />
+	</Provider>
+	, document.getElementById('reacthub'));
