@@ -1,6 +1,6 @@
 .footer {
     text-align: center;
-    color: #ffffff;
+    color: grey;
     position: fixed;
     left: 0;
     bottom: 0;
@@ -9,6 +9,9 @@
 }
 .footer a {
     text-decoration: none;
-    color: #fff;
+    color: grey;
     font-weight: 300;
+}
+#reacthub {
+    height: 100%;
 }

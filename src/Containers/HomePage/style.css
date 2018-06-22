@@ -3,10 +3,6 @@ body {
     font-family: 'Ubuntu', sans-serif;
     margin: 0;
     padding: 0;
-    background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    height: 100%;
 }
 p {
     font-size: 16px;
@@ -14,6 +10,10 @@ p {
 .main-container {
     text-align: center;
     padding: 10%;
+    background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100%;
 }
 .main-container h1, .main-container p {
     color: #ffffff;

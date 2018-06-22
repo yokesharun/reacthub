@@ -1,4 +1,4 @@
-# Reacthub
+# ReactHub
 React JS + Github API's = ReactHub
 
 <img src="https://github.com/yokesharun/reacthub/blob/master/public/images/Reacthub.png" alt="ReactHub" align="center" />
