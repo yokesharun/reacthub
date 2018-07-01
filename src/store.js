@@ -10,9 +10,9 @@ const Store = createStore(
 	Reducer,
 	initialState,
 	compose(
-      applyMiddleware(thunk),
-      window.devToolsExtension ? window.devToolsExtension() : f => f
-    )
+		applyMiddleware(thunk),
+		window.devToolsExtension ? window.devToolsExtension() : f => f
+	)
 );
 
 export default Store;

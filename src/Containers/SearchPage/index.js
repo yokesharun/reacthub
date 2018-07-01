@@ -12,15 +12,17 @@ class SearchPage extends Component {
 			query : this.props.match.params.query,
 			activeItem: 'repos',
 			loading: false,
-		}
+		};
 	}
 
 	componentDidMount(){
 		this.props.searchRepo(this.state.query);
 	}
-	
-	handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
+	handleItemClick(e, { name }){
+		this.setState({ activeItem: name });
+	}	
+	
 	render() {
 
 		const { activeItem } = this.state;
@@ -31,10 +33,10 @@ class SearchPage extends Component {
 				<Menu.Menu position="left" className="search-input-top">
 					<Menu.Item>
 						<Input 
-						icon="search" 
-						defaultValue={this.props.match.params.query} 
-						onChange={(e)=>this.setState({query: e.target.value})}
-						placeholder='Search...' />
+							icon="search" 
+							defaultValue={this.props.match.params.query} 
+							onChange={(e)=>this.setState({query: e.target.value})}
+							placeholder='Search...' />
 					</Menu.Item>
 				</Menu.Menu>
 			</Menu>
@@ -84,7 +86,7 @@ class SearchPage extends Component {
 					) : (
 						<Loader active inline />
 					)
-				}
+					}
 				</div>
 			);
 		};
@@ -107,10 +109,10 @@ class SearchPage extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        data: state.searchRepo
-    };
-}
+	return {
+		data: state.searchRepo
+	};
+};
 
 const mapDispatchToProps = (dispatch) => ({
 	searchRepo: (query) => dispatch(searchRepo(query)),

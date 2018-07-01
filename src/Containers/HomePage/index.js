@@ -10,14 +10,14 @@ export default class HomePage extends Component {
 		this.state = {
 			query : '',
 			submit: false
-		}
+		};
 	}
 
 	onChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
+		this.setState({
+			[e.target.name]: e.target.value
+		});
+	}
 
 	handleSubmit() {
 		if(this.state.query !== ''){
@@ -28,7 +28,7 @@ export default class HomePage extends Component {
 	render() {
 
 		if (this.state.submit === true) {
-	      return <Redirect to={"/search/" + this.state.query} />
+	    	return <Redirect to={'/search/' + this.state.query} />;
 	    }
 
 		return (
