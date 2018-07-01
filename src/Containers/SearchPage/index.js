@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
-import { Input, Menu, Grid, Segment, Item, Image, Label } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { searchRepo } from './actions.js';
+import { Input, Menu, Grid, Item, Label, Loader } from 'semantic-ui-react';
 import './style.css';
 
-export default class SearchPage extends Component {
+class SearchPage extends Component {
 
 	constructor(props){
 		super(props);
 		this.state = {
 			query : this.props.match.params.query,
 			activeItem: 'repos',
-			loading: false
+			loading: false,
 		}
 	}
 
+	componentDidMount(){
+		this.props.searchRepo(this.state.query);
+	}
+	
 	handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
 	render() {
@@ -22,9 +28,13 @@ export default class SearchPage extends Component {
 		const MenuBar = () => (
 			<Menu>
 				<Menu.Item header className="nav-bar-header">ReactHub</Menu.Item>
-				<Menu.Menu position='left' className="search-input-top">
+				<Menu.Menu position="left" className="search-input-top">
 					<Menu.Item>
-						<Input icon='search' value={this.state.query} placeholder='Search...' />
+						<Input 
+						icon="search" 
+						defaultValue={this.props.match.params.query} 
+						onChange={(e)=>this.setState({query: e.target.value})}
+						placeholder='Search...' />
 					</Menu.Item>
 				</Menu.Menu>
 			</Menu>
@@ -38,43 +48,46 @@ export default class SearchPage extends Component {
 			</Menu>
 		);
 
-		const ItemExampleItems = () => (
-		  <Item.Group divided>
-		    <Item>
-		      <Item.Content>
-		        <Item.Header as='a'>Header</Item.Header>
-		        <Item.Meta>Description</Item.Meta>
-		        <Item.Description>
-		        	<Label color='grey' horizontal>
-				        Fruit
-				      </Label>
-				      <Label color='grey' horizontal>
-				        Fruit
-				      </Label>
-				      <Label color='grey' horizontal>
-				        Fruit
-				      </Label>
-		        </Item.Description>
-		        <Item.Extra>Updated at : 23th June 2018</Item.Extra>
-		        <Item.Extra>
-		        	<Label as='a' color='yellow'>
-				      Javascript
-				    </Label>
-    			</Item.Extra>
-		      </Item.Content>
-		    </Item>
-
-		    <Item>
-		      <Item.Content>
-		        <Item.Header as='a'>Header</Item.Header>
-		        <Item.Meta>Description</Item.Meta>
-		        <Item.Description>
-		        </Item.Description>
-		        <Item.Extra>Additional Details</Item.Extra>
-		      </Item.Content>
-		    </Item>
-		  </Item.Group>
-		);
+		const SearchItems = () => { 
+			return (
+				<div>
+					{this.props.data ? (
+						this.props.data.items.map((item) => {
+							return (
+								<Item.Group divided key={item.id}>
+								    <Item>
+								      <Item.Content>
+								        <Item.Header as='a'>{item.full_name}</Item.Header>
+								        <Item.Meta>{item.description}</Item.Meta>
+								        <Item.Description>
+								        	<Label color='grey' horizontal>
+										        Open Issues {item.open_issues_count}
+										    </Label>
+										    <Label color='grey' horizontal>
+										        Watchers {item.watchers_count}
+										    </Label>
+										    <Label color='grey' horizontal>
+										        Forks {item.forks_count}
+										    </Label>
+								        </Item.Description>
+								        <Item.Extra>Created at : {item.created_at}</Item.Extra>
+								        <Item.Extra>
+								        	<Label as='a' color='yellow'>
+										      {item.language ? item.language : 'Not Defined'}
+										    </Label>
+						    			</Item.Extra>
+								      </Item.Content>
+								    </Item>
+								</Item.Group>
+							);
+						})
+					) : (
+						<Loader active inline />
+					)
+				}
+				</div>
+			);
+		};
 
 		return (
 			<div>
@@ -84,11 +97,23 @@ export default class SearchPage extends Component {
 						<SideBar />
 					</Grid.Column>
 					<Grid.Column className="search-col-right" width={12}>
-						<h1 class="search-result-info">526,872 repository results for { this.state.query }</h1>
-						<ItemExampleItems />
+						<h1 className="search-result-info">{this.props.data && this.props.data.total_count} repository results for { this.state.query }</h1>
+						<SearchItems />
 				    </Grid.Column>
 				</Grid>
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = (state) => {
+    return {
+        data: state.searchRepo
+    };
+}
+
+const mapDispatchToProps = (dispatch) => ({
+	searchRepo: (query) => dispatch(searchRepo(query)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

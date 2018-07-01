@@ -7,13 +7,13 @@
     font-size: 1.5em;
 }
 .search-sidebar {
-    float: right;
+    position: fixed;
 }
 .header {
     color: #02a061 !important;
 }
 .search-result-info {
-    padding: 1em;
+    padding: 1em 0;
 }
 .search-col-left {
     padding-top: 3em !important;
