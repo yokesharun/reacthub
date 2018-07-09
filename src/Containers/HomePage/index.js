@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
-import { Input, Form } from 'semantic-ui-react';
-import { Redirect } from 'react-router-dom';
-import './style.css';
+import React, { Component } from "react";
+import { Input, Form } from "semantic-ui-react";
+import { Redirect } from "react-router-dom";
+import "./style.css";
 
 export default class HomePage extends Component {
-
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.state = {
-			query : '',
+			query: "",
 			submit: false
 		};
 	}
@@ -20,23 +19,31 @@ export default class HomePage extends Component {
 	}
 
 	handleSubmit() {
-		if(this.state.query !== ''){
-			this.setState({ submit : true });
+		if (this.state.query !== "") {
+			this.setState({ submit: true });
 		}
 	}
 
 	render() {
-
 		if (this.state.submit === true) {
-	    	return <Redirect to={'/search/' + this.state.query} />;
-	    }
+			return <Redirect to={"/search/" + this.state.query} />;
+		}
 
 		return (
 			<div className="main-container">
 				<h1>ReactHub</h1>
-				<p>Github - Searches, Repositories, Gists, Users, Issues all together.</p>
-				<Form onSubmit={ () => this.handleSubmit() }>
-					<Input name="query" onChange={ e => this.onChange(e) } icon="search" placeholder="Search hub items here" className="search-bar" />
+				<p>
+					Github - Searches, Repositories, Gists, Users, Issues all
+					together.
+				</p>
+				<Form onSubmit={() => this.handleSubmit()}>
+					<Input
+						name="query"
+						onChange={e => this.onChange(e)}
+						icon="search"
+						placeholder="Search hub items here"
+						className="search-bar"
+					/>
 				</Form>
 			</div>
 		);

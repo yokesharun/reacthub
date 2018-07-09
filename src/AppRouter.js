@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import HomePage from './Containers/HomePage';
-import SearchPage from './Containers/SearchPage';
+import React, { Component } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import HomePage from "./Containers/HomePage";
+import SearchPage from "./Containers/SearchPage";
 
 export default class AppRouter extends Component {
 	render() {

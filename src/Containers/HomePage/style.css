@@ -1,23 +1,31 @@
 .main-container {
-    text-align: center;
-    padding: 10%;
-    background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    height: 100%;
+	text-align: center;
+	padding: 10%;
+	background-image: linear-gradient(
+		right top,
+		#051937,
+		#004d7a,
+		#008793,
+		#00bf72,
+		#a8eb12
+	);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height: 100%;
 }
-.main-container h1, .main-container p {
-    color: #ffffff;
+.main-container h1,
+.main-container p {
+	color: #ffffff;
 }
 .main-container h1 {
-    font-size: 6em;
-    font-weight: 500;
+	font-size: 6em;
+	font-weight: 500;
 }
 .search-bar {
-    width: 60%;
-    height: 4em;
-    margin: 3%;
+	width: 60%;
+	height: 4em;
+	margin: 3%;
 }
 .ui.input.search-bar {
-    font-size: 1.5em;
+	font-size: 1.5em;
 }

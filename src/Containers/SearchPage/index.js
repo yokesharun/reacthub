@@ -1,42 +1,61 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { searchRepo } from './actions.js';
-import { Input, Menu, Grid, Item, Label, Loader } from 'semantic-ui-react';
-import './style.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { searchRepo, searchUser, searchIssue } from "./actions.js";
+import {
+	SearchUserItems,
+	SearchRepoItems,
+	SearchIssueItems
+} from "./Components/SearchResults";
+import { Input, Menu, Grid, Loader } from "semantic-ui-react";
+import "./style.css";
 
 class SearchPage extends Component {
-
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.state = {
-			query : this.props.match.params.query,
-			activeItem: 'repos',
-			loading: false,
+			query: this.props.match.params.query,
+			activeItem: "repos",
+			loading: false
 		};
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		this.props.searchRepo(this.state.query);
 	}
 
-	handleItemClick(e, { name }){
+	handleItemClick = (e, { name }) => {
 		this.setState({ activeItem: name });
-	}	
-	
-	render() {
+		if (name === "repos" && this.props.searchRepoData.length === 0) {
+			this.props.searchRepo(this.state.query);
+		} else if (name === "users" && this.props.searchUserData.length === 0) {
+			this.props.searchUser(this.state.query);
+		} else if (
+			name === "issues" &&
+			this.props.searchIssueData.length === 0
+		) {
+			this.props.searchIssue(this.state.query);
+		}
+	};
 
+	render() {
 		const { activeItem } = this.state;
+		const { searchRepoData, searchUserData, searchIssueData } = this.props;
 
 		const MenuBar = () => (
 			<Menu>
-				<Menu.Item header className="nav-bar-header">ReactHub</Menu.Item>
+				<Menu.Item header className="nav-bar-header">
+					ReactHub
+				</Menu.Item>
 				<Menu.Menu position="left" className="search-input-top">
 					<Menu.Item>
-						<Input 
-							icon="search" 
-							defaultValue={this.props.match.params.query} 
-							onChange={(e)=>this.setState({query: e.target.value})}
-							placeholder='Search...' />
+						<Input
+							icon="search"
+							defaultValue={this.state.query}
+							onChange={e =>
+								this.setState({ query: e.target.value })
+							}
+							placeholder="Search for Repos, Issues, Users..."
+						/>
 					</Menu.Item>
 				</Menu.Menu>
 			</Menu>
@@ -44,78 +63,75 @@ class SearchPage extends Component {
 
 		const SideBar = () => (
 			<Menu pointing vertical className="search-sidebar">
-				<Menu.Item name='repos' active={activeItem === 'repos'} onClick={this.handleItemClick} />
-				<Menu.Item name='users' active={activeItem === 'users'} onClick={this.handleItemClick} />
-				<Menu.Item name='issues' active={activeItem === 'issues'} onClick={this.handleItemClick} />
+				<Menu.Item
+					name="repos"
+					active={activeItem === "repos"}
+					onClick={this.handleItemClick}
+				/>
+				<Menu.Item
+					name="users"
+					active={activeItem === "users"}
+					onClick={this.handleItemClick}
+				/>
+				<Menu.Item
+					name="issues"
+					active={activeItem === "issues"}
+					onClick={this.handleItemClick}
+				/>
 			</Menu>
 		);
-
-		const SearchItems = () => { 
-			return (
-				<div>
-					{this.props.data ? (
-						this.props.data.items.map((item) => {
-							return (
-								<Item.Group divided key={item.id}>
-								    <Item>
-								      <Item.Content>
-								        <Item.Header as='a'>{item.full_name}</Item.Header>
-								        <Item.Meta>{item.description}</Item.Meta>
-								        <Item.Description>
-								        	<Label color='grey' horizontal>
-										        Open Issues {item.open_issues_count}
-										    </Label>
-										    <Label color='grey' horizontal>
-										        Watchers {item.watchers_count}
-										    </Label>
-										    <Label color='grey' horizontal>
-										        Forks {item.forks_count}
-										    </Label>
-								        </Item.Description>
-								        <Item.Extra>Created at : {item.created_at}</Item.Extra>
-								        <Item.Extra>
-								        	<Label as='a' color='yellow'>
-										      {item.language ? item.language : 'Not Defined'}
-										    </Label>
-						    			</Item.Extra>
-								      </Item.Content>
-								    </Item>
-								</Item.Group>
-							);
-						})
-					) : (
-						<Loader active inline />
-					)
-					}
-				</div>
-			);
-		};
 
 		return (
 			<div>
 				<MenuBar />
-				<Grid columns='equal'>
+				<Grid columns="equal">
 					<Grid.Column className="search-col-left" width={4}>
 						<SideBar />
 					</Grid.Column>
 					<Grid.Column className="search-col-right" width={12}>
-						<h1 className="search-result-info">{this.props.data && this.props.data.total_count} repository results for { this.state.query }</h1>
-						<SearchItems />
-				    </Grid.Column>
+						{this.state.activeItem === "repos" &&
+						searchRepoData.items ? (
+							<SearchRepoItems
+								searchRepoData={searchRepoData}
+								query={this.state.query}
+							/>
+						) : this.state.activeItem === "users" &&
+						searchUserData.items ? (
+							<SearchUserItems
+								searchUserData={searchUserData}
+								query={this.state.query}
+							/>
+						) : this.state.activeItem === "issues" &&
+						searchIssueData.items ? (
+							<SearchIssueItems
+								searchIssueData={searchIssueData}
+								query={this.state.query}
+							/>
+						) : (
+							<Loader active inline />
+						)}
+					</Grid.Column>
 				</Grid>
 			</div>
 		);
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
-		data: state.searchRepo
+		searchRepoData: state.searchRepo,
+		searchUserData: state.searchUser,
+		searchIssueData: state.searchIssue
 	};
 };
 
-const mapDispatchToProps = (dispatch) => ({
-	searchRepo: (query) => dispatch(searchRepo(query)),
+const mapDispatchToProps = dispatch => ({
+	searchRepo: query => dispatch(searchRepo(query)),
+	searchUser: query => dispatch(searchUser(query)),
+	searchIssue: query => dispatch(searchIssue(query))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(SearchPage);

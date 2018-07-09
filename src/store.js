@@ -1,9 +1,11 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import Reducer from './Reducers';
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import Reducer from "./Reducers";
 
 const initialState = {
-	searchRepo: {}
+	searchRepo: [],
+	searchUser: [],
+	searchIssue: []
 };
 
 const Store = createStore(
